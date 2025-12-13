@@ -1,17 +1,17 @@
 {% set name = "git-filter-repo" %}
-{% set version = "2.38.0" %}
+{% set version = "2.47.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-    sha256: fe1753e18f0bd6d3c9b57868c8011ae7d056a6ebab706706396a15ef5312725e
+  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name | replace('-', '_') }}-{{ version }}.tar.gz
+    sha256: 411b27e68a080c07a69c233cb526dbc2d848b09a72f10477f4444dd0822cf290
     patches:
       - entry-points.patch
   - url: https://github.com/newren/git-filter-repo/releases/download/v{{ version }}/{{ name }}-{{ version }}.tar.xz
-    sha256: db954f4cae9e47c6be3bd3161bc80540d44f5379cb9cf9df498f4e019f0a41a9
+    sha256: 4662cbe5918196a9f1b5b3e1211a32e61cff1812419c21df4f47c5439f09e902
     fn: {{ name }}-github-{{ version }}.tar.xz
     folder: orig
 
@@ -19,7 +19,7 @@ build:
   entry_points:
     - git-filter-repo = git_filter_repo:main
   noarch: python
-  number: 1
+  number: 0
 
 requirements:
   host:
