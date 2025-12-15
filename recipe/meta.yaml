@@ -6,20 +6,15 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name | replace('-', '_') }}-{{ version }}.tar.gz
-    sha256: 411b27e68a080c07a69c233cb526dbc2d848b09a72f10477f4444dd0822cf290
-    patches:
-      - entry-points.patch
-  - url: https://github.com/newren/git-filter-repo/releases/download/v{{ version }}/{{ name }}-{{ version }}.tar.xz
-    sha256: 4662cbe5918196a9f1b5b3e1211a32e61cff1812419c21df4f47c5439f09e902
-    fn: {{ name }}-github-{{ version }}.tar.xz
-    folder: orig
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name | replace('-', '_') }}-{{ version }}.tar.gz
+  sha256: 411b27e68a080c07a69c233cb526dbc2d848b09a72f10477f4444dd0822cf290
 
 build:
   entry_points:
     - git-filter-repo = git_filter_repo:main
   noarch: python
   number: 0
+  script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
@@ -38,6 +33,7 @@ test:
   commands:
     # check requirements
     - python -m pip check
+    - python -m pip show git-filter-repo
     # check entry point
     - git-filter-repo --version
     # check git integration
@@ -48,7 +44,7 @@ about:
   summary: Quickly rewrite git repository history
   dev_url: https://github.com/newren/git-filter-repo
   license: MIT
-  license_file: orig/COPYING.mit
+  license_file: COPYING.mit
 
 extra:
   recipe-maintainers:
